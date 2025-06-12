@@ -1,12 +1,12 @@
 <?php
-// Enable error reporting for debugging
+// Enable error reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Database connection settings
+// Database connection
 $servername = "localhost";
 $username = "root";
-$password = "";  // Update this if you have a DB password
+$password = "";
 $dbname = "library_db";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -22,7 +22,7 @@ $edit_data = [
     'publication' => ''
 ];
 
-// Handle Delete Request
+// Handle Delete
 if (isset($_GET['delete'])) {
     $del_acc = $conn->real_escape_string($_GET['delete']);
     if (!$conn->query("DELETE FROM books WHERE accession_number='$del_acc'")) {
@@ -33,7 +33,7 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// Handle Edit Request - show form filled with data
+// Handle Edit
 if (isset($_GET['edit'])) {
     $edit_acc = $conn->real_escape_string($_GET['edit']);
     $result = $conn->query("SELECT * FROM books WHERE accession_number='$edit_acc'");
@@ -45,7 +45,7 @@ if (isset($_GET['edit'])) {
     }
 }
 
-// Handle form submission (Add or Update)
+// Handle Form Submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $accession_number = trim($_POST['accession_number']);
     $title = trim($_POST['title']);
@@ -53,14 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $edition = trim($_POST['edition']);
     $publication = trim($_POST['publication']);
 
-    // Validation
     if (!$accession_number || !$title || !$author) {
         $message = "Accession Number, Title and Author are required.";
     } elseif (!preg_match('/^[a-zA-Z0-9\-]+$/', $accession_number)) {
         $message = "Accession Number can only contain letters, numbers, and hyphens.";
     } else {
         if (isset($_POST['editing']) && $_POST['editing'] == 'yes') {
-            // UPDATE existing
             $stmt = $conn->prepare("UPDATE books SET title=?, author=?, edition=?, publication=? WHERE accession_number=?");
             $stmt->bind_param("sssss", $title, $author, $edition, $publication, $accession_number);
             if ($stmt->execute()) {
@@ -72,7 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             $stmt->close();
         } else {
-            // INSERT new
             $check = $conn->query("SELECT accession_number FROM books WHERE accession_number='$accession_number'");
             if ($check && $check->num_rows > 0) {
                 $message = "Error: Accession Number already exists.";
@@ -91,15 +88,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Fetch all books to display
-$result = $conn->query("SELECT * FROM books ORDER BY accession_number ASC");
+// Handle Search
+$search_query = "";
+if (isset($_GET['search']) && trim($_GET['search']) !== '') {
+    $search_input = $conn->real_escape_string(trim($_GET['search']));
+    $search_query = "WHERE title LIKE '%$search_input%'";
+    $message = "Showing results for: \"" . htmlspecialchars($search_input) . "\"";
+}
 
+$result = $conn->query("SELECT * FROM books $search_query ORDER BY accession_number ASC");
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Book Management</title>
+    <title>Library Book Management</title>
     <style>
         body { font-family: Arial, sans-serif; max-width: 900px; margin: auto; padding: 20px; }
         h2 { color: #333; }
@@ -160,7 +163,16 @@ $result = $conn->query("SELECT * FROM books ORDER BY accession_number ASC");
     <?php endif; ?>
 </form>
 
-<h2>All Books</h2>
+<h2>Search Book by Title</h2>
+<form method="get" action="<?= basename($_SERVER['PHP_SELF']) ?>" style="margin-bottom: 20px;">
+    <input type="text" name="search" placeholder="Enter title to search..." value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" style="padding: 8px; width: 300px;">
+    <input type="submit" value="Search">
+    <?php if (isset($_GET['search'])): ?>
+        <input type="button" value="Clear" onclick="window.location.href='<?= basename($_SERVER['PHP_SELF']) ?>';">
+    <?php endif; ?>
+</form>
+
+<h2><?= isset($_GET['search']) ? "Search Results" : "All Books" ?></h2>
 
 <?php if ($result && $result->num_rows > 0): ?>
 <table>
