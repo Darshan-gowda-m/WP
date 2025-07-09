@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Cookie</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #2193b0, #6dd5ed);
+            font-family: Arial, sans-serif;
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            width: 200px;
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #00c9a7;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #02b397;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Your Name</h2>
+        <form action="CookieServlet" method="post">
+            <input type="text" name="username" placeholder="Your Name" required><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
