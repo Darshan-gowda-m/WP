@@ -9,16 +9,26 @@ import javax.servlet.http.*;
 public class CookieServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    // Handles form submission and creates cookie
+    // POST: Create cookie
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String username = request.getParameter("username");
 
-        // Create cookie
-        Cookie cookie = new Cookie("username", username);
-        cookie.setMaxAge(60 * 60); // 1 hour
-        response.addCookie(cookie);
+        // Sanitize input
+        String safeUsername = username.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+
+        // Create cookie with name "username"
+        Cookie cookie = new Cookie("username", safeUsername);
+
+        // Cookie details
+        cookie.setMaxAge(60 * 60); // Cookie lives for 1 hour
+        cookie.setPath("/");       // Accessible throughout the app
+        // cookie.setHttpOnly(true); // Uncomment to prevent JS access (security)
+        // cookie.setSecure(true);   // Uncomment if using HTTPS
+
+        response.addCookie(cookie); // Add cookie to response
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -30,13 +40,14 @@ public class CookieServlet extends HttpServlet {
         out.println("a { color: #00c9a7; text-decoration: none; }");
         out.println("</style></head><body>");
         out.println("<div class='box'>");
-        out.println("<h2>Hello, <strong>" + username + "</strong>!</h2>");
-        out.println("<p>Cookie has been created and stored on your browser.</p>");
+        out.println("<h2>Hello, <strong>" + safeUsername + "</strong>!</h2>");
+        out.println("<p>Cookie has been created and stored in your browser.</p>");
         out.println("<p><a href='CookieServlet'>Click here to read the cookie</a></p>");
         out.println("</div></body></html>");
     }
 
-    // Handles GET request and reads cookie
+    // GET: Read cookie
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
