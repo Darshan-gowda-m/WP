@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Session Demo</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #1f4037, #99f2c8);
+            font-family: Arial, sans-serif;
+            color: white;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: rgba(0,0,0,0.6);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 18px;
+            background: #00c9a7;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background: #02b397;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Session Info Demo</h1>
+        <form action="SessionServlet" method="post">
+            <input type="submit" value="Create & View Session Info">
+        </form>
+    </div>
+</body>
+</html>
