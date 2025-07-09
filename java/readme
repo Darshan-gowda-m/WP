@@ -1,1 +1,71 @@
+✅ Install Java for Web Developers and Tomcat 9
+1. 🔽 Download Eclipse IDE for Enterprise Java and Web Developers
+👉 Download Eclipse
 
+Choose your OS (Windows/Linux/Mac)
+
+Install or extract the zip folder
+
+2. 🔽 Download and Extract Apache Tomcat 9
+👉 Download Tomcat 9
+
+Scroll to Binary Distributions
+
+Download Core zip (e.g., apache-tomcat-9.x.xx.zip)
+
+Extract the zip file to a known location, e.g., C:\Tomcat9
+
+⚙️ Configure Tomcat in Eclipse
+3. 🔧 Add Tomcat Server Runtime in Eclipse
+Open Eclipse
+
+Go to Window > Preferences
+
+Navigate to Server > Runtime Environments
+
+Click Add
+
+Choose Apache > Tomcat v9.0 → Next
+
+Browse to Tomcat folder (e.g., C:\Tomcat9)
+
+Click Finish, then Apply and Close
+
+🚀 Create and Run Your Web Project
+4. 📁 Create a Dynamic Web Project
+Go to File > New > Dynamic Web Project
+
+Enter Project Name, e.g., MyServletApp
+
+Select Target Runtime as Apache Tomcat v9.0
+
+Keep default configuration and click Finish
+
+5. 📝 Add Static Web Content
+Navigate to:
+src/main/webapp (create this folder structure if not already present)
+
+Right-click on webapp > New > File > Name it index.html
+
+
+
+6. 🧑‍💻 Create a Servlet
+Right-click on Java Resources > src → New > Servlet
+
+Enter:
+
+Package name: com.example
+
+Class name: HelloServlet
+
+Click Finish
+
+replace code with your java program
+
+
+
+
+7. 🧪 Run Your Application
+Right-click the project > Run As > Run on Server
+
+Choose Tomcat v9.0
