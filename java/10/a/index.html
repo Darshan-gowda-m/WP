@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Greeting App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 10px #000;
+            width: 300px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 90%;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #00c9a7;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #02b397;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Your Name</h2>
+        <form action="GreetServlet" method="post">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <br>
+            <input type="submit" value="Greet Me">
+        </form>
+    </div>
+</body>
+</html>
