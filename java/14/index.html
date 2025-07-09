@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Request Info</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #1f4037, #99f2c8);
+      font-family: Arial, sans-serif;
+      color: white;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #00c9a7;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+    button:hover {
+      background: #02b397;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Test Different HTTP Methods</h2>
+    <form action="InfoServlet" method="get">
+      <button type="submit">Send GET Request</button>
+    </form>
+
+    <form action="InfoServlet" method="post">
+      <button type="submit">Send POST Request</button>
+    </form>
+
+    <button onclick="sendOtherRequest('PUT')">Send PUT Request (AJAX)</button>
+    <button onclick="sendOtherRequest('DELETE')">Send DELETE Request (AJAX)</button>
+
+    <script>
+      function sendOtherRequest(method) {
+        fetch('InfoServlet', {
+          method: method
+        })
+        .then(response => response.text())
+        .then(html => document.write(html))
+        .catch(err => alert("Error: " + err));
+      }
+    </script>
+  </div>
+</body>
+</html>
